@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive AI Engineer Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .progress-bar-bg {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            height: 12px;
+            backdrop-filter: blur(2px);
+        }
+        .progress-bar-fg {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            border-radius: 9999px;
+            height: 12px;
+            transition: width 0.5s ease-in-out;
+            box-shadow: 0 0 10px #ec4899, 0 0 5px #a855f7;
+        }
+        .character {
+            transition: left 0.5s ease-in-out;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 48px;
+        }
+        .goal {
+            width: 48px;
+            height: 48px;
+            transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+        }
+        .goal.celebrate {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 15px #facc15);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .accordion-button.open + .accordion-content {
+            max-height: 2500px; /* Increased max-height */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .accordion-button .icon {
+            transition: transform 0.3s ease-out;
+        }
+        .accordion-button.open .icon {
+            transform: rotate(180deg);
+        }
+        .table-cell {
+            vertical-align: middle;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animation-bg {
+            background: #111827;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+                radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+            background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+            background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+            animation: stars 120s linear infinite;
+        }
+        @keyframes stars {
+            from { background-position: 0 0, 40px 60px, 130px 270px, 70px 100px; }
+            to { background-position: -10000px 5000px, -10000px 5000px, -10000px 5000px, -10000px 5000px; }
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div id="loader-container" class="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="loader"></div>
+    </div>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Your AI Engineer Learning Journey</h1>
+            <p class="text-gray-600 mt-2">Track your progress from foundational concepts to cutting-edge AI.</p>
+        </header>
+
+        <!-- Animation Section -->
+        <div class="animation-bg p-6 rounded-2xl shadow-lg mb-8 overflow-hidden">
+            <div class="relative w-full flex items-center h-16">
+                <div id="character" class="character absolute top-1/2 -translate-y-1/2" style="left: 0%;">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M13.4142 12L15.2929 13.8787C15.6834 14.2692 15.6834 14.9024 15.2929 15.2929C14.9024 15.6834 14.2692 15.6834 13.8787 15.2929L12 13.4142L10.1213 15.2929C9.7308 15.6834 9.0976 15.6834 8.7071 15.2929C8.3166 14.9024 8.3166 14.2692 8.7071 13.8787L10.5858 12L8.7071 10.1213C8.3166 9.7308 8.3166 9.0976 8.7071 8.7071C9.0976 8.3166 9.7308 8.3166 10.1213 8.7071L12 10.5858L13.8787 8.7071C14.2692 8.3166 14.9024 8.3166 15.2929 8.7071C15.6834 9.0976 15.6834 9.7308 15.2929 10.1213L13.4142 12Z M2.3934 20.6066C2 20.2132 2 19.58 2.3934 19.1866L19.1866 2.3934C19.58 2 20.2132 2 20.6066 2.3934C21 2.7868 21 3.42 20.6066 3.8134L3.8134 20.6066C3.42 21 2.7868 21 2.3934 20.6066Z" transform="rotate(45 12 12)"/></svg>
+                </div>
+                <div class="w-full mx-12">
+                    <div class="progress-bar-bg">
+                        <div id="progress-bar" class="progress-bar-fg" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div id="goal" class="goal absolute top-1/2 -translate-y-1/2 right-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#facc15"><path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.064-.928L12 1l3.35 6.864 8.064.928-5.935 5.488 1.575 7.928z"/></svg>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <span id="progress-text" class="font-semibold text-lg text-white">0% Complete</span>
+            </div>
+        </div>
+
+        <!-- Roadmap Section -->
+        <div id="roadmap-container" class="space-y-4">
+            <!-- Roadmap content will be generated by JavaScript -->
+        </div>
+         <div class="text-center mt-8 text-sm text-gray-500">
+            <p>Your progress is saved automatically. User ID: <span id="user-id" class="font-mono"></span></p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- DATA ---
+        const roadmapData = [
+            {
+                stage: "I: Foundations",
+                topics: [
+                    {
+                        topic: "Essential Mathematics",
+                        subtopics: [
+                            { id: "linear-algebra", name: "Linear Algebra", resource: "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab", concepts: ["Visualize vectors as arrows in space.", "Understand matrices as linear transformations (scaling, rotation, shear).", "Grasp the meaning of determinants, dot products, and eigenvalues/eigenvectors.", "See how these concepts represent data and operations in ML."] },
+                            { id: "calculus", name: "Differential & Multivariable Calculus", resource: "https://ocw.mit.edu/collections/mitres-18-001-calculus-online-textbook-spring-2005/pages/textbook/", concepts: ["Understand derivatives as rates of change.", "Learn how gradients point in the direction of steepest ascent.", "Master the chain rule for differentiating composite functions.", "Connect these concepts to how models are optimized via gradient descent."] },
+                            { id: "probability-stats", name: "Probability & Statistics", resource: "https://www.khanacademy.org/math/statistics-probability", concepts: ["Learn key probability distributions (Normal, Binomial).", "Understand conditional probability and Bayes' Theorem.", "Distinguish between descriptive and inferential statistics.", "Learn how to perform hypothesis testing and interpret p-values."] },
+                        ]
+                    },
+                    {
+                        topic: "Core Programming & Tools",
+                        subtopics: [
+                            { id: "python-oop", name: "Python & OOP", resource: "https://cs50.harvard.edu/python/2022/", concepts: ["Master core data types, loops, and functions.", "Understand Object-Oriented principles: classes, objects, inheritance.", "Write clean, modular, and testable code.", "Learn to handle errors gracefully with try-except blocks."] },
+                            { id: "numpy", name: "NumPy", resource: "https://numpy.org/doc/stable/user/absolute_beginners.html", concepts: ["Understand the N-dimensional array (ndarray) object.", "Perform fast, vectorized arithmetic operations on arrays.", "Learn array slicing, indexing, and broadcasting.", "Use NumPy for fundamental scientific computations."]},
+                            { id: "pandas", name: "Pandas", resource: "https://www.kaggle.com/learn/pandas", concepts: ["Manipulate data with Series and DataFrames.", "Learn data cleaning: selecting, filtering, grouping, handling missing data.", "Merge, join, and concatenate different datasets.", "Load data from various sources like CSV and Excel."]},
+                            { id: "git-env", name: "Version Control & Environments", resource: "https://swcarpentry.github.io/git-novice/", concepts: ["Use the core Git workflow: add, commit, push, pull.", "Manage different lines of work with branches.", "Collaborate with others using remote repositories (e.g., GitHub).", "Isolate project dependencies using venv or Conda."] },
+                        ]
+                    }
+                ]
+            },
+            {
+                stage: "II: Classical ML",
+                topics: [
+                    {
+                        topic: "Supervised Learning",
+                        subtopics: [
+                            { id: "regression", name: "Regression", resource: "https://developers.google.com/machine-learning/crash-course/descending-into-ml/linear-regression", concepts: ["Understand the goal: predicting continuous values.", "Learn how a linear model makes predictions.", "Grasp the concept of a loss function (e.g., MSE).", "See how gradient descent minimizes the loss function."] },
+                            { id: "classification", name: "Classification", resource: "https://www.youtube.com/playlist?list=PL_ppTC_2f2a7ky2A32G9eJqgO2I3a9a29", concepts: ["Understand the goal: predicting discrete categories.", "Learn different algorithms: Logistic Regression, SVMs, Decision Trees.", "Understand key evaluation metrics: Accuracy, Precision, Recall, F1-score.", "Interpret a confusion matrix and ROC curve."] },
+                            { id: "random-forests", name: "Random Forests & Bagging", resource: "https://www.youtube.com/watch?v=J4i_wXPZk_s", concepts: ["Grasp the core idea of Bagging (Bootstrap Aggregating).", "Understand how Random Forests reduce variance by using random feature subsets.", "Learn to interpret feature importance from a trained forest.", "Know when to use Random Forests over other models."]},
+                            { id: "gradient-boosting", name: "Gradient Boosting", resource: "https://www.youtube.com/watch?v=3CC4N4z3GJc", concepts: ["Understand the sequential nature of Boosting.", "Learn how models are trained to correct the errors of their predecessors.", "Grasp the role of gradients in the training process.", "Know the difference between AdaBoost, Gradient Boosting, and XGBoost."]},
+                        ]
+                    },
+                    {
+                        topic: "Unsupervised Learning",
+                        subtopics: [
+                            { id: "clustering", name: "Clustering", resource: "https://course.fast.ai/Lessons/lesson4.html", concepts: ["Understand the goal: finding natural groups in unlabeled data.", "Learn the K-Means algorithm and the role of centroids.", "Know how to choose the optimal number of clusters (k).", "Interpret the output of a clustering algorithm."] },
+                            { id: "dimensionality-reduction", name: "Dimensionality Reduction", resource: "https://scikit-learn.org/stable/modules/decomposition.html", concepts: ["Understand the 'curse of dimensionality'.", "Learn how PCA finds principal components to reduce dimensions.", "Use t-SNE and UMAP for visualizing high-dimensional data.", "Apply PCA for feature engineering and noise reduction."] },
+                        ]
+                    }
+                ]
+            },
+            {
+                stage: "III: Deep Learning",
+                topics: [
+                     {
+                        topic: "Deep Learning Fundamentals",
+                        subtopics: [
+                            { id: "cnns", name: "Convolutional Neural Networks (CNNs)", resource: "https://cs231n.github.io/", concepts: ["Understand the convolution operation and its role in feature detection.", "Learn about key layers: Convolution, Pooling, Fully Connected.", "Grasp how CNNs build hierarchical representations of images.", "Study classic architectures like LeNet, AlexNet, VGG."]},
+                            { id: "transformer", name: "The Transformer", resource: "http://nlp.seas.harvard.edu/2018/04/03/attention.html", concepts: ["Understand the limitation of RNNs that attention solves.", "Grasp the core mechanism: Self-Attention (Query, Key, Value).", "Learn about positional encodings and multi-head attention.", "See why this architecture enables massive parallelization and large models."] },
+                            { id: "diffusion-models", name: "Diffusion Models", resource: "https://huggingface.co/learn/diffusion-models/unit1/introduction", concepts: ["Distinguish between discriminative and generative models.", "Understand the core idea: adding noise, then learning to reverse it.", "Grasp the concept of the denoising U-Net architecture.", "Recognize applications in high-fidelity image synthesis."]},
+                            { id: "gans", name: "Generative Adversarial Networks (GANs)", resource: "https://developers.google.com/machine-learning/gan", concepts: ["Understand the two-player game: a competing Generator and Discriminator.", "Learn how the two networks are trained in an adversarial process.", "Grasp the concept of a GAN loss function.", "Recognize common failure modes like mode collapse."]},
+                        ]
+                    }
+                ]
+            },
+            {
+                stage: "IV: Specialization",
+                topics: [
+                    {
+                        topic: "Computer Vision",
+                        subtopics: [
+                            { id: "advanced-cv-architectures", name: "Advanced Architectures (ResNet, Vision Transformer)", resource: "https://www.youtube.com/watch?v=6-i1Gntf_I4", concepts: ["Understand the vanishing gradient problem in deep CNNs.", "Learn how residual connections in ResNet enable much deeper networks.", "Grasp how Vision Transformers (ViT) apply the attention mechanism to image patches.", "Compare the inductive biases of CNNs vs. Transformers for vision tasks."]},
+                            { id: "detection-segmentation", name: "Object Detection & Segmentation", resource: "https://www.youtube.com/watch?v=C46-82p_G-k&list=PL_ppTC_2f2a5_a0iF0P4iB3F976YQ9W8D", concepts: ["Distinguish between classification, localization, detection, and segmentation.", "Understand the architecture of single-shot detectors like YOLO.", "Learn how segmentation models like U-Net work for pixel-level classification.", "Grasp evaluation metrics like Intersection over Union (IoU)."]},
+                        ]
+                    },
+                    {
+                        topic: "Time-Series Forecasting",
+                        subtopics: [
+                            { id: "statistical-forecasting", name: "Statistical Models (ARIMA)", resource: "https://otexts.com/fpp2/", concepts: ["Understand concepts of stationarity, autocorrelation (ACF), and partial autocorrelation (PACF).", "Learn the components of an ARIMA model: Auto-Regressive, Integrated, Moving Average.", "Know how to select the p, d, and q parameters.", "Grasp the limitations of statistical models for complex patterns."]},
+                            { id: "deep-learning-forecasting", name: "Deep Learning for Time Series", resource: "https://www.youtube.com/watch?v=kGdbPnMCdOg", concepts: ["Learn how to frame forecasting as a sequence-to-sequence problem.", "Apply LSTMs and Transformers to capture temporal dependencies.", "Understand how to handle multivariate time series and include external features.", "Evaluate forecasting models using metrics like MAE, RMSE, and MASE."]},
+                        ]
+                    },
+                    {
+                        topic: "Natural Language Processing",
+                        subtopics: [
+                            { id: "finetuning-prompting", name: "Fine-tuning & Prompting", resource: "https://huggingface.co/learn/nlp-course/chapter1/1", concepts: ["Understand the concept of pre-training on large text corpora.", "Learn how to fine-tune a pre-trained model on a specific downstream task.", "Master prompt engineering techniques to guide LLM behavior at inference.", "Use the Hugging Face ecosystem (Transformers, Datasets, Tokenizers)."] },
+                        ]
+                    },
+                    {
+                        topic: "Reinforcement Learning",
+                        subtopics: [
+                             { id: "classic-deep-rl", name: "Classic & Deep RL", resource: "https://www.youtube.com/watch?v=2pWv7GOvjpi&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ", concepts: ["Understand the core components: Agent, Environment, State, Action, Reward.", "Grasp the Bellman equations and the concept of value functions.", "Learn the difference between policy-based and value-based methods.", "See how Deep RL uses neural networks to handle complex state spaces."] },
+                        ]
+                    },
+                     {
+                        topic: "Graph Machine Learning",
+                        subtopics: [
+                             { id: "gnn", name: "Graph Neural Networks (GNNs)", resource: "http://web.stanford.edu/class/cs224w/", concepts: ["Recognize when a problem can be modeled as a graph.", "Understand the core idea of message passing between nodes.", "Learn how GNNs aggregate information from a node's neighborhood.", "Apply GNNs to tasks like node classification and link prediction."] },
+                        ]
+                    }
+                ]
+            },
+            {
+                stage: "V: MLOps",
+                topics: [
+                    {
+                        topic: "Versioning & Reproducibility",
+                        subtopics: [
+                            { id: "data-model-versioning", name: "Data & Model Versioning", resource: "https://dvc.org/doc/start", concepts: ["Understand why Git alone is not enough for ML projects.", "Use DVC to version large datasets and model files.", "Connect code, data, and models for full experiment reproducibility.", "Learn the DVC workflow: `dvc add`, `dvc push`, `dvc pull`."] },
+                        ]
+                    },
+                    {
+                        topic: "Deployment & Serving",
+                        subtopics: [
+                            { id: "containerization-docker", name: "Containerization (Docker)", resource: "https://docs.docker.com/get-started/", concepts: ["Understand the difference between images and containers.", "Write a Dockerfile to package an application and its dependencies.", "Manage containers and images using the Docker CLI.", "Use Docker Compose for multi-container applications."]},
+                            { id: "orchestration-kubernetes", name: "Orchestration (Kubernetes)", resource: "https://kubernetes.io/docs/tutorials/kubernetes-basics/", concepts: ["Understand the role of orchestration in production.", "Learn basic Kubernetes objects: Pods, Deployments, Services.", "Deploy a containerized model as a scalable, fault-tolerant API.", "Grasp how Kubernetes manages networking and storage for containers."]},
+                        ]
+                    },
+                    {
+                        topic: "Monitoring & Maintenance",
+                        subtopics: [
+                             { id: "model-monitoring-drift", name: "Model Monitoring & Drift Detection", resource: "https://www.evidentlyai.com/ml-observability-course", concepts: ["Understand why model performance degrades over time.", "Distinguish between data drift and concept drift.", "Set up dashboards to track model quality and data statistics.", "Implement alerts to trigger model retraining when needed."] },
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = {
+            apiKey: "AIzaSyC18Ik6tpcqriKB7sKeIms367LCES7HVWo",
+            authDomain: "roadmap-e68ea.firebaseapp.com",
+            projectId: "roadmap-e68ea",
+            storageBucket: "roadmap-e68ea.firebasestorage.app",
+            messagingSenderId: "333392625598",
+            appId: "1:333392625598:web:7fd9b22b9857507db983ef",
+            measurementId: "G-6KVMQGTBJC"
+            };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let userId = null;
+        let progressData = {};
+        let totalSubtopics = 0;
+        let lastCheckedMilestone = 0;
+        
+        const loaderContainer = document.getElementById('loader-container');
+
+        function renderRoadmap() {
+            const container = document.getElementById('roadmap-container');
+            container.innerHTML = '';
+            totalSubtopics = 0;
+
+            roadmapData.forEach((stageData, stageIndex) => {
+                const stageId = `stage-${stageIndex}`;
+                
+                const stageWrapper = document.createElement('div');
+                stageWrapper.className = 'bg-white rounded-2xl shadow-md overflow-hidden';
+
+                const button = document.createElement('button');
+                button.className = 'accordion-button w-full flex justify-between items-center p-4 md:p-5 text-left font-semibold text-lg bg-gray-50 hover:bg-gray-100 transition-colors';
+                button.setAttribute('aria-expanded', 'false');
+                button.setAttribute('aria-controls', stageId);
+                if (stageIndex === 0) {
+                    button.classList.add('open');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+                button.innerHTML = `
+                    <span>${stageData.stage}</span>
+                    <i class="fas fa-chevron-down icon"></i>
+                `;
+
+                const content = document.createElement('div');
+                content.id = stageId;
+                content.className = 'accordion-content px-4 md:px-5';
+                if (stageIndex === 0) {
+                     content.style.maxHeight = '2500px';
+                     content.style.paddingTop = '1rem';
+                     content.style.paddingBottom = '1rem';
+                }
+
+                stageData.topics.forEach(topicData => {
+                    const topicTitle = document.createElement('h3');
+                    topicTitle.className = 'text-md font-bold text-indigo-700 mt-4 mb-3';
+                    topicTitle.textContent = topicData.topic;
+                    content.appendChild(topicTitle);
+
+                    const tableWrapper = document.createElement('div');
+                    tableWrapper.className = 'overflow-x-auto';
+                    
+                    const table = document.createElement('table');
+                    table.className = 'min-w-full divide-y divide-gray-200';
+                    
+                    const tbody = document.createElement('tbody');
+                    tbody.className = 'bg-white divide-y divide-gray-200';
+
+                    topicData.subtopics.forEach(subtopic => {
+                        totalSubtopics++;
+                        const conceptsList = subtopic.concepts.map(concept => 
+                            `<li class="flex items-start"><span class="mr-2 mt-1 text-pink-500 text-xs">&#9679;</span><span>${concept}</span></li>`
+                        ).join('');
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="px-4 py-4 w-8 table-cell">
+                                <input id="${subtopic.id}" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" data-id="${subtopic.id}">
+                            </td>
+                            <td class="px-4 py-4 table-cell">
+                                <label for="${subtopic.id}" class="font-medium text-gray-900 cursor-pointer">${subtopic.name}</label>
+                            </td>
+                            <td class="px-4 py-4 text-sm text-gray-600 table-cell">
+                                <ul class="space-y-1">${conceptsList}</ul>
+                            </td>
+                            <td class="px-4 py-4 text-right table-cell">
+                                <a href="${subtopic.resource}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-semibold text-sm">
+                                    Resource <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    table.appendChild(tbody);
+                    tableWrapper.appendChild(table);
+                    content.appendChild(tableWrapper);
+                });
+
+                stageWrapper.appendChild(button);
+                stageWrapper.appendChild(content);
+                container.appendChild(stageWrapper);
+            });
+        }
+
+        function triggerCelebration() {
+            const goalIcon = document.getElementById('goal');
+            goalIcon.classList.add('celebrate');
+            setTimeout(() => {
+                goalIcon.classList.remove('celebrate');
+            }, 600);
+        }
+
+        function updateUI() {
+            let checkedCount = 0;
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const subtopicId = checkbox.dataset.id;
+                if (progressData[subtopicId]) {
+                    checkbox.checked = true;
+                    checkedCount++;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+
+            const percentage = totalSubtopics > 0 ? (checkedCount / totalSubtopics) * 100 : 0;
+            
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('character').style.left = `${percentage}%`;
+            document.getElementById('progress-text').textContent = `${Math.round(percentage)}% Complete`;
+
+            const currentMilestone = Math.floor(percentage / 25);
+            if (currentMilestone > 0 && currentMilestone > lastCheckedMilestone) {
+                triggerCelebration();
+            }
+            lastCheckedMilestone = currentMilestone;
+            if (percentage >= 100) {
+                 triggerCelebration();
+            }
+        }
+
+        async function saveProgress() {
+            if (!userId) return;
+            try {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/ai-roadmap-progress`, 'progress');
+                await setDoc(docRef, progressData);
+            } catch (error) {
+                console.error("Error saving progress: ", error);
+            }
+        }
+
+        function setupEventListeners() {
+            const container = document.getElementById('roadmap-container');
+            container.addEventListener('change', (e) => {
+                if (e.target.type === 'checkbox') {
+                    const subtopicId = e.target.dataset.id;
+                    progressData[subtopicId] = e.target.checked;
+                    updateUI();
+                    saveProgress();
+                }
+            });
+
+            container.addEventListener('click', (e) => {
+                const button = e.target.closest('.accordion-button');
+                if (button) {
+                    const isOpen = button.classList.toggle('open');
+                    button.setAttribute('aria-expanded', isOpen.toString());
+                }
+            });
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                document.getElementById('user-id').textContent = userId;
+
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/ai-roadmap-progress`, 'progress');
+                
+                onSnapshot(docRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        progressData = docSnap.data();
+                    } else {
+                        progressData = {};
+                    }
+                    renderRoadmap();
+                    updateUI();
+                    setupEventListeners();
+                    loaderContainer.style.display = 'none';
+                }, (error) => {
+                    console.error("Error fetching progress:", error);
+                    renderRoadmap();
+                    updateUI();
+                    setupEventListeners();
+                    loaderContainer.style.display = 'none';
+                });
+
+            } else {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Authentication failed:", error);
+                    loaderContainer.style.display = 'none';
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
